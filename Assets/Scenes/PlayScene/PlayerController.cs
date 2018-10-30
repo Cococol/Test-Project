@@ -29,7 +29,7 @@ namespace consoleCommand
         [Header("Gameobjects")]
         public Slider expSlider;
         Vector3 velocity;
-        public float speed = 25.0f;
+        public float speed = 5.0f;
         public Rigidbody rb;
         #endregion
 
@@ -59,31 +59,46 @@ namespace consoleCommand
 
         public void Movement()
         {
-
             #region test movement
-            //velocity = rb.velocity;
+            velocity = rb.velocity;
 
-            //if (Input.GetAxis("Horizontal") > 0)
-            //{
-            //    velocity.x += speed * Time.deltaTime;
-            //}
+            if (Input.GetKey(KeyCode.D))
+            {
+                velocity.x = 5;
+            }
+            else if(Input.GetKeyUp(KeyCode.D))
+            {
+                velocity.x = 0;
+            }
 
-            //if (Input.GetAxis("Horizontal") < 0)
-            //{
-            //    velocity.x -= speed * Time.deltaTime;
-            //}
+            if (Input.GetKey(KeyCode.A))
+            {
+                velocity.x = -5;
+            }
+            else if (Input.GetKeyUp(KeyCode.A))
+            {
+                velocity.x = 0;
+            }
 
-            //if (Input.GetAxis("Vertical") > 0)
-            //{
-            //    velocity.z += speed * Time.deltaTime;
-            //}
+            if (Input.GetKey(KeyCode.W))
+            {
+                velocity.z = 5;
+            }
+            else if(Input.GetKeyUp(KeyCode.W))
+            {
+                velocity.z = 0;
+            }
 
-            //if (Input.GetAxis("Vertical") < 0)
-            //{
-            //    velocity.z -= speed * Time.deltaTime;
-            //}
+            if (Input.GetKey(KeyCode.S))
+            {
+                velocity.z = -5;
+            }
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                velocity.z = 0;
+            }
 
-            //rb.velocity = velocity;
+            rb.velocity = velocity;
             #endregion
         }
 
