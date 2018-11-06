@@ -28,9 +28,12 @@ namespace consoleCommand
 
         [Header("Gameobjects")]
         public Slider expSlider;
-        Vector3 velocity;
-        public float speed = 5.0f;
         public Rigidbody rb;
+        public float speed = 5.0f;
+        float rotateY;
+        float rotateX;
+        Vector3 velocity;
+        Camera camera;
         #endregion
 
         private void Start()
@@ -38,11 +41,19 @@ namespace consoleCommand
             //expSlider.value = expSliderCalculator();
             rb = GetComponent<Rigidbody>();
             Exp = RemainingExp;
+            camera = Camera.main;
+            Cursor.visible = false;
         }
 
         void Update()
         {
             Movement();
+
+            rotateX -= Input.GetAxis("Mouse Y");
+            rotateY += Input.GetAxis("Mouse X");
+
+            camera.transform.rotation = Quaternion.Euler(rotateX, rotateY, 0);
+            transform.rotation = Quaternion.Euler(0, rotateY, 0);
 
             if (Exp >= ExpGoal)
             {
@@ -59,6 +70,11 @@ namespace consoleCommand
 
         public void Movement()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Cursor.visible = true;
+            }
+
             #region test movement
             velocity = rb.velocity;
 
@@ -68,7 +84,7 @@ namespace consoleCommand
             }
             else if(Input.GetKeyUp(KeyCode.D))
             {
-                velocity.x = 0;
+                velocity.x -= 1;
             }
 
             if (Input.GetKey(KeyCode.A))
@@ -77,7 +93,7 @@ namespace consoleCommand
             }
             else if (Input.GetKeyUp(KeyCode.A))
             {
-                velocity.x = 0;
+                velocity.x -= 1;
             }
 
             if (Input.GetKey(KeyCode.W))
@@ -86,7 +102,7 @@ namespace consoleCommand
             }
             else if(Input.GetKeyUp(KeyCode.W))
             {
-                velocity.z = 0;
+                velocity.z -= 1;
             }
 
             if (Input.GetKey(KeyCode.S))
@@ -95,7 +111,7 @@ namespace consoleCommand
             }
             else if (Input.GetKeyUp(KeyCode.S))
             {
-                velocity.z = 0;
+                velocity.z -= 1;
             }
 
             rb.velocity = velocity;
