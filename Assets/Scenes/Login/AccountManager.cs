@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
+using SaveData;
 
-namespace test
+namespace AccountData
 {
     public class AccountManager : MonoBehaviour
     {
@@ -29,15 +30,17 @@ namespace test
 
         public Dictionary<string, string> accountHolder = new Dictionary<string, string>();
 
-        PlayerData playerData = new PlayerData();
+        public SaveGameData Data;
+
+        SaveGameDataInfo DataInfo;
 
         private void Start()
         {
             json = File.ReadAllText(Application.dataPath + "/StreamingAssets/saveFile.json");
-            playerData = JsonConvert.DeserializeObject<PlayerData>(json);
-            accountHolder = playerData.Accounts;
-            Remember = playerData.rememberUsername;
-            RememberUsername.isOn = playerData.rememberToggle;
+            DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
+            accountHolder = DataInfo.Accounts;
+            Remember = DataInfo.rememberUsername;
+            RememberUsername.isOn = DataInfo.rememberToggle;
         }
 
         public void RegisterAccount()
@@ -87,20 +90,12 @@ namespace test
 
         public void SaveTest()
         {
-            playerData.rememberUsername = Remember;
-            playerData.Accounts = accountHolder;
-            playerData.rememberToggle = RememberUsername.isOn;
-            json = JsonConvert.SerializeObject(playerData, Formatting.Indented);
-            File.WriteAllText(Application.dataPath + "/StreamingAssets/saveFile.json", json);
+            Data.SaveData();
         }
 
         public void LoadTest()
         {
-            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/saveFile.json");
-            playerData = JsonConvert.DeserializeObject<PlayerData>(json);
-            accountHolder = playerData.Accounts;
-            Remember = playerData.rememberUsername;
-            RememberUsername.isOn = playerData.rememberToggle;
+            Data.LoadData();
         }
 
         public void ToggleActivated()
@@ -158,13 +153,5 @@ namespace test
             yield return new WaitForSeconds(t);
             RespondText.text = "";
         }
-
-        private class PlayerData
-        {
-            public bool rememberToggle;
-            public bool rememberUsername;
-            public Dictionary<string, string> Accounts = new Dictionary<string, string>();
-        }
-
     }
 }
