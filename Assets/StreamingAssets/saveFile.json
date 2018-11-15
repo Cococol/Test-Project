@@ -1,5 +1,7 @@
 {
-  "rememberToggle": true,
+  "rememberToggle": false,
   "rememberUsername": true,
-  "Accounts": {}
+  "Accounts": {
+    "1234": "1234"
+  }
 }

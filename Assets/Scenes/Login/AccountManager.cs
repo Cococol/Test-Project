@@ -22,6 +22,7 @@ namespace AccountData
         public GameObject Register;
 
         [Header("Overig")]
+        public InputField SaveFileName;
         public Toggle RememberUsername;
         public Text RespondText;
         public bool Remember = false;
@@ -32,15 +33,12 @@ namespace AccountData
 
         public SaveGameData Data;
 
-        SaveGameDataInfo DataInfo;
+        SaveGameDataInfo DataInfo = new SaveGameDataInfo();
 
         private void Start()
         {
-            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/saveFile.json");
-            DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
-            accountHolder = DataInfo.Accounts;
-            Remember = DataInfo.rememberUsername;
-            RememberUsername.isOn = DataInfo.rememberToggle;
+            Data = FindObjectOfType<SaveGameData>();
+            Data.LoadStartingData();
         }
 
         public void RegisterAccount()

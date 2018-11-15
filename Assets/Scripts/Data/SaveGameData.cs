@@ -4,15 +4,18 @@ using UnityEngine;
 using AccountData;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 namespace SaveData
 {
     public class SaveGameData : MonoBehaviour
     {
         string json;
+        string activeScene;
+        string saveName;
 
-        AccountManager AccMan;
-        SaveGameDataInfo Data;
+        public AccountManager AccMan;
+        SaveGameDataInfo Data = new SaveGameDataInfo();
 
         void Start()
         {
@@ -20,13 +23,23 @@ namespace SaveData
             DontDestroyOnLoad(gameObject);
         }
 
+        public void LoadStartingData()
+        {
+            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/saveFile.json");
+            Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
+            AccMan.accountHolder = Data.Accounts;
+            AccMan.Remember = Data.rememberUsername;
+            AccMan.RememberUsername.isOn = Data.rememberToggle;
+        }
+
         public void SaveData()
         {
+            saveName = AccMan.SaveFileName.text;
             Data.rememberUsername = AccMan.Remember;
             Data.Accounts = AccMan.accountHolder;
             Data.rememberToggle = AccMan.RememberUsername.isOn;
             json = JsonConvert.SerializeObject(Data, Formatting.Indented);
-            File.WriteAllText(Application.dataPath + "/StreamingAssets/saveFile.json", json);
+            File.WriteAllText(Application.dataPath + "/StreamingAssets/" + saveName + ".json", json);
         }
 
         public void LoadData()
