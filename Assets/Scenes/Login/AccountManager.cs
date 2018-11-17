@@ -29,6 +29,10 @@ namespace AccountData
         #endregion
         string json;
 
+        public DirectoryInfo saveFile = new DirectoryInfo(Application.dataPath + "/StreamingAssets/");
+
+        string saveInfo;
+
         public Dictionary<string, string> accountHolder = new Dictionary<string, string>();
 
         public SaveGameData Data;
@@ -37,6 +41,7 @@ namespace AccountData
 
         private void Start()
         {
+            saveInfo = saveFile.GetFiles().ToString();
             Data = FindObjectOfType<SaveGameData>();
             Data.LoadStartingData();
         }
@@ -74,6 +79,7 @@ namespace AccountData
             }
             else if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
             {
+                foreach()
                 RespondText.text = "<color=blue>Account information correct.</color>";
                 ResetValues();
                 StartCoroutine(RemoveText(3));

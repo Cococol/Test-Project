@@ -4,7 +4,6 @@ using UnityEngine;
 using AccountData;
 using System.IO;
 using Newtonsoft.Json;
-using UnityEngine.SceneManagement;
 
 namespace SaveData
 {
@@ -25,11 +24,18 @@ namespace SaveData
 
         public void LoadStartingData()
         {
-            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/saveFile.json");
-            Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
-            AccMan.accountHolder = Data.Accounts;
-            AccMan.Remember = Data.rememberUsername;
-            AccMan.RememberUsername.isOn = Data.rememberToggle;
+            if (File.Exists("/StreamingAssets/" + saveName + ".json"))
+            {
+                json = File.ReadAllText(Application.dataPath + "/StreamingAssets/" + saveName + ".json");
+                Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
+                AccMan.accountHolder = Data.Accounts;
+                AccMan.Remember = Data.rememberUsername;
+                AccMan.RememberUsername.isOn = Data.rememberToggle;
+            }
+            else
+            {
+                return;
+            }
         }
 
         public void SaveData()
@@ -44,7 +50,7 @@ namespace SaveData
 
         public void LoadData()
         {
-            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/saveFile.json");
+            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/" + saveName + ".json");
             Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
             AccMan.accountHolder = Data.Accounts;
             AccMan.Remember = Data.rememberUsername;
