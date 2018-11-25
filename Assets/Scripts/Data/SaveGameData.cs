@@ -11,7 +11,7 @@ namespace SaveData
     {
         string json;
         string activeScene;
-        string saveName;
+        string SaveFileName;
 
         public AccountManager AccMan;
         SaveGameDataInfo Data = new SaveGameDataInfo();
@@ -22,44 +22,43 @@ namespace SaveData
             DontDestroyOnLoad(gameObject);
         }
 
-        public void LoadStartingData()
+        public void SaveUsername()
         {
-            if (File.Exists("/StreamingAssets/" + saveName + ".json"))
-            {
-                json = File.ReadAllText(Application.dataPath + "/StreamingAssets/" + saveName + ".json");
-                Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
-                AccMan.accountHolder = Data.Accounts;
-                AccMan.Remember = Data.rememberUsername;
-                AccMan.RememberUsername.isOn = Data.rememberToggle;
-            }
-            else
-            {
-                return;
-            }
+            Data.rememberUsername = AccMan.Remember;
+            Data.rememberToggle = AccMan.RememberUsername.isOn;
+            json = JsonConvert.SerializeObject(Data, Formatting.Indented);
+            File.WriteAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json", json);
+        }
+
+        public void LoadUsername()
+        {
+            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json");
+            Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
+            AccMan.Remember = Data.rememberUsername;
+            AccMan.RememberUsername.isOn = Data.rememberToggle;
         }
 
         public void SaveData()
         {
-            saveName = AccMan.SaveFileName.text;
-            Data.rememberUsername = AccMan.Remember;
+            SaveFileName = AccMan.SaveFileName.text;
+            Data.saveFileName = AccMan.SaveFileName.text;
             Data.Accounts = AccMan.accountHolder;
-            Data.rememberToggle = AccMan.RememberUsername.isOn;
             json = JsonConvert.SerializeObject(Data, Formatting.Indented);
-            File.WriteAllText(Application.dataPath + "/StreamingAssets/" + saveName + ".json", json);
+            File.WriteAllText(Application.dataPath + "/StreamingAssets/" + SaveFileName + ".json", json);
         }
 
-        public void LoadData()
+        public void LoadData(string loadSaveData)
         {
-            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/" + saveName + ".json");
+            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/" + loadSaveData + ".json");
             Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
             AccMan.accountHolder = Data.Accounts;
-            AccMan.Remember = Data.rememberUsername;
-            AccMan.RememberUsername.isOn = Data.rememberToggle;
+            SaveFileName = Data.saveFileName;
         }
     }
-
+    [SerializeField]
     public class SaveGameDataInfo
     {
+        public string saveFileName;
         public bool rememberToggle;
         public bool rememberUsername;
         public Dictionary<string, string> Accounts = new Dictionary<string, string>();

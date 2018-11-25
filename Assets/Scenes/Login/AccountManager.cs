@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System;
 using Newtonsoft.Json;
 using SaveData;
 
@@ -28,10 +29,11 @@ namespace AccountData
         public bool Remember = false;
         #endregion
         string json;
+        string LoadFileName;
 
-        public DirectoryInfo saveFile = new DirectoryInfo(Application.dataPath + "/StreamingAssets/");
+        DirectoryInfo saveFile;
 
-        string saveInfo;
+        FileInfo[] saveInfo;
 
         public Dictionary<string, string> accountHolder = new Dictionary<string, string>();
 
@@ -41,65 +43,133 @@ namespace AccountData
 
         private void Start()
         {
-            saveInfo = saveFile.GetFiles().ToString();
             Data = FindObjectOfType<SaveGameData>();
-            Data.LoadStartingData();
+            saveFile = new DirectoryInfo(Application.dataPath + "/StreamingAssets/");
+            saveInfo = saveFile.GetFiles("*.json");
+            if(File.Exists(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json"))
+            {
+                Data.LoadUsername();
+            }
+            else
+            {
+                return;
+            }
         }
 
         public void RegisterAccount()
         {
-            if (registerUsername.text == "" || registerPassword.text == "")
+            if (saveFile.GetFiles().Length > 0)
             {
-                RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
+                foreach (FileInfo Fi in saveInfo)
+                {      
+                    json = File.ReadAllText(Fi.ToString());
+
+                    DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
+                    accountHolder = DataInfo.Accounts;
+
+                    if (registerUsername.text == null || registerPassword.text == null || SaveFileName.text == null)
+                    {
+                        RespondText.text = "<color=red>Username, password or save file name has not been filled in.</color>";
+                        StartCoroutine(RemoveText(3));
+                    }
+                    else if (accountHolder.ContainsKey(registerUsername.text) && accountHolder.ContainsValue(registerPassword.text))
+                    {
+                        RespondText.text = "<color=red> account already exists.</color>";
+                        StartCoroutine(RemoveText(3));
+                    }
+                    else
+                    {
+                        accountHolder.Add(registerUsername.text, registerPassword.text);
+                        RespondText.text = "<color=blue>Account has been registered.</color>";
+                        Data.SaveData();
+                        StartCoroutine(RemoveText(3));
+                    }
+                    accountHolder.Clear();
+                }
                 ResetValues();
-                StartCoroutine(RemoveText(3));
-            }
-            else if (accountHolder.ContainsKey(registerUsername.text) && accountHolder.ContainsValue(registerPassword.text))
-            {
-                RespondText.text = "<color=red> account already exists.</color>";
-                ResetValues();
-                StartCoroutine(RemoveText(3));
             }
             else
             {
-                accountHolder.Add(registerUsername.text, registerPassword.text);
-                RespondText.text = "<color=blue>Account has been registered.</color>";
-                ResetValues();
-                StartCoroutine(RemoveText(3));
+                Debug.Log("Path is not found");
+                if (registerUsername.text == null || registerPassword.text == null || SaveFileName.text == null)
+                {
+                    RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
+                    ResetValues();
+                    StartCoroutine(RemoveText(3));
+                }
+                else if (accountHolder.ContainsKey(registerUsername.text) && accountHolder.ContainsValue(registerPassword.text))
+                {
+                    RespondText.text = "<color=red> account already exists.</color>";
+                    ResetValues();
+                    StartCoroutine(RemoveText(3));
+                }
+                else
+                {
+                    accountHolder.Add(registerUsername.text, registerPassword.text);
+                    RespondText.text = "<color=blue>Account has been registered.</color>";
+                    Data.SaveData();
+                    ResetValues();
+                    StartCoroutine(RemoveText(3));
+                }
+                accountHolder.Clear();
             }
         }
 
         public void AccountLogin()
         {
-            if (loginUsername.text == "" || loginPassword.text == "")
+            if (saveFile.GetFiles().Length > 0)
             {
-                RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
-                ResetValues();
-                StartCoroutine(RemoveText(3));
-            }
-            else if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
-            {
-                foreach()
-                RespondText.text = "<color=blue>Account information correct.</color>";
-                ResetValues();
-                StartCoroutine(RemoveText(3));
-            }
-            else if (!accountHolder.ContainsKey(loginUsername.text) || !accountHolder.ContainsValue(loginPassword.text))
-            {
-                RespondText.text = "<color=red>Username or password is not correct.</color>";
-                ResetValues();
-                StartCoroutine(RemoveText(3));
-            }
-        }
+                foreach (FileInfo Fi in saveInfo)
+                {
+                    json = File.ReadAllText(Fi.ToString());
 
-        public void SaveTest()
-        {
-            Data.SaveData();
-        }
+                    DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
+                    accountHolder = DataInfo.Accounts;
+                    LoadFileName = DataInfo.saveFileName;
 
-        public void LoadTest()
-        {
-            Data.LoadData();
+                    if (loginUsername.text == null || loginPassword.text == null)
+                    {
+                        RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
+                        StartCoroutine(RemoveText(3));
+                    }
+                    else if (!accountHolder.ContainsKey(loginUsername.text) || !accountHolder.ContainsValue(loginPassword.text))
+                    {
+                        RespondText.text = "<color=red>Username or password is not correct.</color>";
+                        StartCoroutine(RemoveText(3));
+                    }
+                    else if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
+                    {
+                        RespondText.text = "<color=blue>Account information correct.</color>";
+                        Data.LoadData(LoadFileName);
+                        StartCoroutine(RemoveText(3));
+                    }
+                    accountHolder.Clear();
+                }
+                ResetValues();
+            }
+            else
+            {
+                if (loginUsername.text == null || loginPassword.text == null)
+                {
+                    RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
+                    ResetValues();
+                    StartCoroutine(RemoveText(3));
+                }
+                else if (!accountHolder.ContainsKey(loginUsername.text) || !accountHolder.ContainsValue(loginPassword.text))
+                {
+                    RespondText.text = "<color=red>Username or password is not correct.</color>";
+                    ResetValues();
+                    StartCoroutine(RemoveText(3));
+                }
+                else if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
+                {
+                    RespondText.text = "<color=blue>Account information correct.</color>";
+                    Data.LoadData();
+                    ResetValues();
+                    StartCoroutine(RemoveText(3));                
+                }
+                accountHolder.Clear();
+            }
         }
 
         public void ToggleActivated()
@@ -113,6 +183,7 @@ namespace AccountData
             {
                 Remember = true;
             }
+            Data.SaveUsername();
         }
 
         private void ResetValues()
@@ -124,16 +195,6 @@ namespace AccountData
             loginPassword.text = "";
             registerPassword.text = "";
             registerUsername.text = "";
-
-            float f = 0;
-
-            f += Time.deltaTime;
-            if (f > 1f)
-            {
-                RespondText.text = "";
-                f = 0;
-            }
-
         }
 
         #region UI toggle
