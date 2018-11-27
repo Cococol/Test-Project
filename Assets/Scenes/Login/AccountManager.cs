@@ -54,6 +54,7 @@ namespace AccountData
             {
                 return;
             }
+            Data.SetAccMan();
         }
 
         public void RegisterAccount()
@@ -90,7 +91,6 @@ namespace AccountData
             }
             else
             {
-                Debug.Log("Path is not found");
                 if (registerUsername.text == null || registerPassword.text == null || SaveFileName.text == null)
                 {
                     RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
@@ -151,24 +151,16 @@ namespace AccountData
             {
                 if (loginUsername.text == null || loginPassword.text == null)
                 {
-                    RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
+                    RespondText.text = "<color=red>No save files found. Please register your account first.</color>";
                     ResetValues();
                     StartCoroutine(RemoveText(3));
                 }
                 else if (!accountHolder.ContainsKey(loginUsername.text) || !accountHolder.ContainsValue(loginPassword.text))
                 {
-                    RespondText.text = "<color=red>Username or password is not correct.</color>";
+                    RespondText.text = "<color=red>No save files found. Please register your account first.</color>";
                     ResetValues();
                     StartCoroutine(RemoveText(3));
                 }
-                else if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
-                {
-                    RespondText.text = "<color=blue>Account information correct.</color>";
-                    Data.LoadData();
-                    ResetValues();
-                    StartCoroutine(RemoveText(3));                
-                }
-                accountHolder.Clear();
             }
         }
 

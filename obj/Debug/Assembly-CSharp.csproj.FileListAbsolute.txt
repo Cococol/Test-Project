@@ -121,10 +121,8 @@ D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\Unity.PackageManagerU
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\Unity.TextMeshPro.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\Unity.TextMeshPro.Editor.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.StandardEvents.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AccessibilityModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AIModule.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.Analytics.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AnimationModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.ARModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AssetBundleModule.dll
@@ -162,7 +160,6 @@ D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SharedInt
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SpatialTracking.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SpriteMaskModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SpriteShapeModule.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.StandardEvents.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.StreamingModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.StyleSheetsModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SubstanceModule.dll

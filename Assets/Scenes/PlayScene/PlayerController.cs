@@ -33,7 +33,7 @@ namespace consoleCommand
         float rotateY;
         float rotateX;
         Vector3 velocity;
-        Camera camera;
+        Camera m_camera;
         #endregion
 
         private void Start()
@@ -41,7 +41,7 @@ namespace consoleCommand
             //expSlider.value = expSliderCalculator();
             rb = GetComponent<Rigidbody>();
             Exp = RemainingExp;
-            camera = Camera.main;
+            m_camera = Camera.main;
             Cursor.visible = false;
         }
 
@@ -52,7 +52,7 @@ namespace consoleCommand
             rotateX -= Input.GetAxis("Mouse Y");
             rotateY += Input.GetAxis("Mouse X");
 
-            camera.transform.rotation = Quaternion.Euler(rotateX, rotateY, 0);
+            m_camera.transform.rotation = Quaternion.Euler(rotateX, rotateY, 0);
             transform.rotation = Quaternion.Euler(0, rotateY, 0);
 
             if (Exp >= ExpGoal)

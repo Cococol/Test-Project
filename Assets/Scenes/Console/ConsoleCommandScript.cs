@@ -14,7 +14,6 @@ namespace consoleCommand
         public GameObject console;
 
         string textCommand;
-        string textAmount;
 
         float numberAmount;
 
@@ -32,18 +31,17 @@ namespace consoleCommand
         {
             textCommand = inputFieldText.text;
 
+            if (Input.GetKeyDown(KeyCode.BackQuote) && !consoleActive)
+            {
+                console.SetActive(true);
+                consoleActive = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.BackQuote) && consoleActive)
+            {
+                console.SetActive(false);
+                consoleActive = false;
+            }
 
-            //if (Input.GetKeyDown(KeyCode.BackQuote) && !consoleActive)
-            //{
-            //    console.SetActive(true);
-            //    consoleActive = true;
-            //}
-            //else if(Input.GetKeyDown(KeyCode.BackQuote) && consoleActive)
-            //{
-            //    console.SetActive(false);
-            //    consoleActive = false;
-            //}
-            
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 tokens = textCommand.Split(' ');
@@ -84,7 +82,6 @@ namespace consoleCommand
         {      
             inputFieldText.text = "";
             numberAmount = 0;
-            textAmount = "";
             textCommand = "";
         }
     }

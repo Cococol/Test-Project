@@ -122,17 +122,13 @@ D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\Unity.Locator.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\Unity.PackageManagerUI.Editor.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\Unity.TextMeshPro.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\Unity.TextMeshPro.Editor.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.Advertisements.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.Analytics.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.Android.Extensions.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.GoogleAudioSpatializer.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.Graphs.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.HoloLens.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.Networking.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.Purchasing.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.SpatialTracking.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.StandardEvents.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.TestRunner.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.Timeline.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.TreeEditor.dll
@@ -141,7 +137,6 @@ D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.VR.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEditor.WindowsStandalone.Extensions.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AccessibilityModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AIModule.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.Analytics.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AnimationModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.ARModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.AssetBundleModule.dll
@@ -180,7 +175,6 @@ D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SpatialTr
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SpatialTrackingModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SpriteMaskModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SpriteShapeModule.dll
-D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.StandardEvents.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.StreamingModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.StyleSheetsModule.dll
 D:\Untiy projects\Own projects\Test Project\Temp\bin\Debug\UnityEngine.SubstanceModule.dll

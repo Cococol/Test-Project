@@ -10,7 +10,6 @@ namespace SaveData
     public class SaveGameData : MonoBehaviour
     {
         string json;
-        string activeScene;
         string SaveFileName;
 
         public AccountManager AccMan;
@@ -18,8 +17,12 @@ namespace SaveData
 
         void Start()
         {
-            AccMan = FindObjectOfType<AccountManager>();
             DontDestroyOnLoad(gameObject);
+        }
+
+        public void SetAccMan()
+        {
+            AccMan = FindObjectOfType<AccountManager>();
         }
 
         public void SaveUsername()
