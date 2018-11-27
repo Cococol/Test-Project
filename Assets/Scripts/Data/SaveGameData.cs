@@ -10,7 +10,7 @@ namespace SaveData
     public class SaveGameData : MonoBehaviour
     {
         string json;
-        string SaveFileName;
+        public string SaveFileName;
 
         public AccountManager AccMan;
         SaveGameDataInfo Data = new SaveGameDataInfo();
@@ -27,7 +27,7 @@ namespace SaveData
 
         public void SaveUsername()
         {
-            Data.rememberUsername = AccMan.Remember;
+            Data.rememberUsername = AccMan.RememberUsernameBool;
             Data.rememberToggle = AccMan.RememberUsername.isOn;
             json = JsonConvert.SerializeObject(Data, Formatting.Indented);
             File.WriteAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json", json);
@@ -37,7 +37,7 @@ namespace SaveData
         {
             json = File.ReadAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json");
             Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
-            AccMan.Remember = Data.rememberUsername;
+            AccMan.RememberUsernameBool = Data.rememberUsername;
             AccMan.RememberUsername.isOn = Data.rememberToggle;
         }
 
