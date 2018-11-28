@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using System;
 using Newtonsoft.Json;
 using SaveData;
 
@@ -20,14 +19,18 @@ namespace AccountData
         [Header("Register UI")]
         public InputField registerUsername;
         public InputField registerPassword;
+        public InputField SaveFileName;
         public GameObject Register;
 
         [Header("Overig")]
-        public InputField SaveFileName;
         public Toggle RememberUsername;
+        public Toggle Showpassword;
         public Text RespondText;
-        public bool Remember = false;
+        public bool RememberUsernameBool = false;
+        public bool ShowPasswordBool = false;
         #endregion
+
+        #region variables
         string json;
         string LoadFileName;
 
@@ -40,13 +43,15 @@ namespace AccountData
         public SaveGameData Data;
 
         SaveGameDataInfo DataInfo = new SaveGameDataInfo();
+        #endregion
 
         private void Start()
         {
             Data = FindObjectOfType<SaveGameData>();
-            saveFile = new DirectoryInfo(Application.dataPath + "/StreamingAssets/");
+            saveFile = new DirectoryInfo(Application.streamingAssetsPath);
             saveInfo = saveFile.GetFiles("*.json");
-            if(File.Exists(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json"))
+            Data.SetAccMan();
+            if (File.Exists(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json"))
             {
                 Data.LoadUsername();
             }
@@ -54,21 +59,40 @@ namespace AccountData
             {
                 return;
             }
-            Data.SetAccMan();
+        }
+
+        private void Update()
+        {
+            if(loginUsername.isFocused && Input.GetKeyDown(KeyCode.Tab))
+            {
+                loginPassword.Select();
+            }
+
+            if (registerUsername.isFocused && Input.GetKeyDown(KeyCode.Tab))
+            {
+                registerPassword.Select();
+            }
+            else if(registerPassword.isFocused && Input.GetKeyDown(KeyCode.Tab))
+            {
+                SaveFileName.Select();
+            }
         }
 
         public void RegisterAccount()
         {
+            //test with respondtext, respond text isn't shown when the project has been build. 
             if (saveFile.GetFiles().Length > 0)
             {
+                //test with respondtext, respond text isn't shown when the project has been build.
                 foreach (FileInfo Fi in saveInfo)
-                {      
+                {
+                    //test with respondtext, respond text isn't shown when the project has been build.
                     json = File.ReadAllText(Fi.ToString());
 
                     DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
                     accountHolder = DataInfo.Accounts;
 
-                    if (registerUsername.text == null || registerPassword.text == null || SaveFileName.text == null)
+                    if (registerUsername.text == "" || registerPassword.text == "" || SaveFileName.text == "")
                     {
                         RespondText.text = "<color=red>Username, password or save file name has not been filled in.</color>";
                         StartCoroutine(RemoveText(3));
@@ -91,7 +115,7 @@ namespace AccountData
             }
             else
             {
-                if (registerUsername.text == null || registerPassword.text == null || SaveFileName.text == null)
+                if (registerUsername.text == "" || registerPassword.text == "" || SaveFileName.text == "")
                 {
                     RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
                     ResetValues();
@@ -164,23 +188,39 @@ namespace AccountData
             }
         }
 
-        public void ToggleActivated()
+        public void RememberUsernameToggle()
         {
-            if (Remember)
+            if (RememberUsernameBool)
             {
-                Remember = false;
+                RememberUsernameBool = false;
                 loginUsername.text = "";
             }
-            else if (!Remember)
+            else if (!RememberUsernameBool)
             {
-                Remember = true;
+                RememberUsernameBool = true;
             }
             Data.SaveUsername();
         }
 
+        public void ShowPasswordToggle()
+        {
+            if (ShowPasswordBool)
+            {
+                ShowPasswordBool = false;
+                loginPassword.contentType = InputField.ContentType.Password;
+                loginPassword.ActivateInputField();
+            }
+            else if (!ShowPasswordBool)
+            {
+                ShowPasswordBool = true;
+                loginPassword.contentType = InputField.ContentType.Standard;
+                loginPassword.ActivateInputField();
+            }
+        }
+
         private void ResetValues()
         {
-            if (!Remember)
+            if (!RememberUsernameBool)
             {
                 loginUsername.text = "";
             }
