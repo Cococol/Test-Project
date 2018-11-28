@@ -48,8 +48,7 @@ namespace AccountData
         private void Start()
         {
             Data = FindObjectOfType<SaveGameData>();
-            saveFile = new DirectoryInfo(Application.streamingAssetsPath);
-            saveInfo = saveFile.GetFiles("*.json");
+            SearchNewSaveFiles();
             Data.SetAccMan();
             if (File.Exists(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json"))
             {
@@ -76,17 +75,23 @@ namespace AccountData
             {
                 SaveFileName.Select();
             }
+            
+            if(Login.activeInHierarchy == true && Input.GetKeyDown(KeyCode.Return))
+            {
+                AccountLogin();
+            }
+            else if(Register.activeInHierarchy == true && Input.GetKeyDown(KeyCode.Return))
+            {
+                RegisterAccount();
+            }
         }
 
         public void RegisterAccount()
         {
-            //test with respondtext, respond text isn't shown when the project has been build. 
-            if (saveFile.GetFiles().Length > 0)
+            if (saveInfo.Length > 0)
             {
-                //test with respondtext, respond text isn't shown when the project has been build.
                 foreach (FileInfo Fi in saveInfo)
                 {
-                    //test with respondtext, respond text isn't shown when the project has been build.
                     json = File.ReadAllText(Fi.ToString());
 
                     DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
@@ -132,16 +137,17 @@ namespace AccountData
                     accountHolder.Add(registerUsername.text, registerPassword.text);
                     RespondText.text = "<color=blue>Account has been registered.</color>";
                     Data.SaveData();
-                    ResetValues();
                     StartCoroutine(RemoveText(3));
                 }
                 accountHolder.Clear();
+                ResetValues();
             }
         }
 
         public void AccountLogin()
         {
-            if (saveFile.GetFiles().Length > 0)
+            SearchNewSaveFiles();
+            if (saveInfo.Length > 0)
             {
                 foreach (FileInfo Fi in saveInfo)
                 {
@@ -151,14 +157,20 @@ namespace AccountData
                     accountHolder = DataInfo.Accounts;
                     LoadFileName = DataInfo.saveFileName;
 
-                    if (loginUsername.text == null || loginPassword.text == null)
+                    foreach(string sV in accountHolder.Values)
+                    {
+                        Debug.Log(sV);
+                    }
+
+
+                    foreach (string sK in accountHolder.Keys)
+                    {
+                        Debug.Log(sK);
+                    }
+
+                    if (loginUsername.text == "" || loginPassword.text == "")
                     {
                         RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
-                        StartCoroutine(RemoveText(3));
-                    }
-                    else if (!accountHolder.ContainsKey(loginUsername.text) || !accountHolder.ContainsValue(loginPassword.text))
-                    {
-                        RespondText.text = "<color=red>Username or password is not correct.</color>";
                         StartCoroutine(RemoveText(3));
                     }
                     else if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
@@ -167,13 +179,21 @@ namespace AccountData
                         Data.LoadData(LoadFileName);
                         StartCoroutine(RemoveText(3));
                     }
+                    //else
+                    //{
+                    //    Debug.Log(loginUsername.text);
+                    //    Debug.Log(loginPassword.text);
+                    //    RespondText.text = "<color=red>Username or password is not correct.</color>";
+                    //    StartCoroutine(RemoveText(3));
+                    //}
+
                     accountHolder.Clear();
                 }
                 ResetValues();
             }
             else
             {
-                if (loginUsername.text == null || loginPassword.text == null)
+                if (loginUsername.text == "" || loginPassword.text == "")
                 {
                     RespondText.text = "<color=red>No save files found. Please register your account first.</color>";
                     ResetValues();
@@ -227,6 +247,13 @@ namespace AccountData
             loginPassword.text = "";
             registerPassword.text = "";
             registerUsername.text = "";
+            SaveFileName.text = "";
+        }
+
+        public void SearchNewSaveFiles()
+        {
+            saveFile = new DirectoryInfo(Application.dataPath + "/StreamingAssets/");
+            saveInfo = saveFile.GetFiles("*.json");
         }
 
         #region UI toggle
