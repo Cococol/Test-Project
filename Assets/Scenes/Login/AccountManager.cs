@@ -151,41 +151,29 @@ namespace AccountData
             {
                 foreach (FileInfo Fi in saveInfo)
                 {
+                    //problem is that because there are multiple files it runs multiple times, it should stop running as soon as it finds that the username and password matches.
                     json = File.ReadAllText(Fi.ToString());
 
                     DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
                     accountHolder = DataInfo.Accounts;
                     LoadFileName = DataInfo.saveFileName;
 
-                    foreach(string sV in accountHolder.Values)
-                    {
-                        Debug.Log(sV);
-                    }
-
-
-                    foreach (string sK in accountHolder.Keys)
-                    {
-                        Debug.Log(sK);
-                    }
-
-                    if (loginUsername.text == "" || loginPassword.text == "")
-                    {
-                        RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
-                        StartCoroutine(RemoveText(3));
-                    }
-                    else if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
+                    if (accountHolder.ContainsKey(loginUsername.text) && accountHolder.ContainsValue(loginPassword.text))
                     {
                         RespondText.text = "<color=blue>Account information correct.</color>";
                         Data.LoadData(LoadFileName);
                         StartCoroutine(RemoveText(3));
                     }
-                    //else
-                    //{
-                    //    Debug.Log(loginUsername.text);
-                    //    Debug.Log(loginPassword.text);
-                    //    RespondText.text = "<color=red>Username or password is not correct.</color>";
-                    //    StartCoroutine(RemoveText(3));
-                    //}
+                    else if (loginUsername.text == "" || loginPassword.text == "")
+                    {
+                        RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
+                        StartCoroutine(RemoveText(3));
+                    }
+                    else if(!accountHolder.ContainsKey(loginUsername.text) && !accountHolder.ContainsValue(loginPassword.text))
+                    {
+                        RespondText.text = "<color=red>Username or password is not correct.</color>";
+                        StartCoroutine(RemoveText(3));
+                    }
 
                     accountHolder.Clear();
                 }
