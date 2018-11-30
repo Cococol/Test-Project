@@ -457,10 +457,53 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114464992463581274, guid: 679778ab470dca444a959ceddf76fa73,
+    - target: {fileID: 224627465544963942, guid: 679778ab470dca444a959ceddf76fa73,
         type: 2}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RememberUsernameToggle
+      propertyPath: m_AnchoredPosition.y
+      value: 90.499756
+      objectReference: {fileID: 0}
+    - target: {fileID: 224238800739818426, guid: 679778ab470dca444a959ceddf76fa73,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -64.999756
+      objectReference: {fileID: 0}
+    - target: {fileID: 114832345775318434, guid: 679778ab470dca444a959ceddf76fa73,
+        type: 2}
+      propertyPath: m_ContentType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114832345775318434, guid: 679778ab470dca444a959ceddf76fa73,
+        type: 2}
+      propertyPath: m_KeyboardType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114832345775318434, guid: 679778ab470dca444a959ceddf76fa73,
+        type: 2}
+      propertyPath: m_CharacterValidation
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114170557749811080, guid: 679778ab470dca444a959ceddf76fa73,
+        type: 2}
+      propertyPath: m_ContentType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114170557749811080, guid: 679778ab470dca444a959ceddf76fa73,
+        type: 2}
+      propertyPath: m_KeyboardType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114170557749811080, guid: 679778ab470dca444a959ceddf76fa73,
+        type: 2}
+      propertyPath: m_CharacterValidation
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276650944098468, guid: 679778ab470dca444a959ceddf76fa73, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686258298048036, guid: 679778ab470dca444a959ceddf76fa73, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679778ab470dca444a959ceddf76fa73, type: 2}

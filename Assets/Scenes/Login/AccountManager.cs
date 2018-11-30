@@ -88,6 +88,7 @@ namespace AccountData
 
         public void RegisterAccount()
         {
+            SearchNewSaveFiles();
             if (saveInfo.Length > 0)
             {
                 foreach (FileInfo Fi in saveInfo)
@@ -114,7 +115,6 @@ namespace AccountData
                         Data.SaveData();
                         StartCoroutine(RemoveText(3));
                     }
-                    accountHolder.Clear();
                 }
                 ResetValues();
             }
@@ -126,22 +126,16 @@ namespace AccountData
                     ResetValues();
                     StartCoroutine(RemoveText(3));
                 }
-                else if (accountHolder.ContainsKey(registerUsername.text) && accountHolder.ContainsValue(registerPassword.text))
-                {
-                    RespondText.text = "<color=red> account already exists.</color>";
-                    ResetValues();
-                    StartCoroutine(RemoveText(3));
-                }
                 else
                 {
                     accountHolder.Add(registerUsername.text, registerPassword.text);
                     RespondText.text = "<color=blue>Account has been registered.</color>";
                     Data.SaveData();
+                    ResetValues();
                     StartCoroutine(RemoveText(3));
                 }
-                accountHolder.Clear();
-                ResetValues();
             }
+            accountHolder.Clear();
         }
 
         public void AccountLogin()
@@ -151,7 +145,6 @@ namespace AccountData
             {
                 foreach (FileInfo Fi in saveInfo)
                 {
-                    //problem is that because there are multiple files it runs multiple times, it should stop running as soon as it finds that the username and password matches.
                     json = File.ReadAllText(Fi.ToString());
 
                     DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
@@ -163,6 +156,9 @@ namespace AccountData
                         RespondText.text = "<color=blue>Account information correct.</color>";
                         Data.LoadData(LoadFileName);
                         StartCoroutine(RemoveText(3));
+                        Data.SaveUsername();
+                        ResetValues();
+                        return;
                     }
                     else if (loginUsername.text == "" || loginPassword.text == "")
                     {
@@ -201,7 +197,6 @@ namespace AccountData
             if (RememberUsernameBool)
             {
                 RememberUsernameBool = false;
-                loginUsername.text = "";
             }
             else if (!RememberUsernameBool)
             {
@@ -249,6 +244,9 @@ namespace AccountData
         {
             Login.SetActive(true);
             Register.SetActive(false);
+            ShowPasswordBool = false;
+            Showpassword.isOn = false;
+            ShowPasswordToggle();
             RespondText.text = "";
         }
 

@@ -29,6 +29,7 @@ namespace SaveData
         {
             Data.rememberUsername = AccMan.RememberUsernameBool;
             Data.rememberToggle = AccMan.RememberUsername.isOn;
+            Data.lastUsedUsername = AccMan.loginUsername.text;
             json = JsonConvert.SerializeObject(Data, Formatting.Indented);
             File.WriteAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json", json);
         }
@@ -37,6 +38,7 @@ namespace SaveData
         {
             json = File.ReadAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json");
             Data = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
+            AccMan.loginUsername.text = Data.lastUsedUsername;
             AccMan.RememberUsernameBool = Data.rememberUsername;
             AccMan.RememberUsername.isOn = Data.rememberToggle;
         }
@@ -64,6 +66,7 @@ namespace SaveData
         public string saveFileName;
         public bool rememberToggle;
         public bool rememberUsername;
+        public string lastUsedUsername;
         public Dictionary<string, string> Accounts = new Dictionary<string, string>();
     }
 }

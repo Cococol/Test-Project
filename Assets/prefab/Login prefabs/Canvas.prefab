@@ -250,7 +250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1293184576653346
 GameObject:
   m_ObjectHideFlags: 1
@@ -470,7 +470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1779306758665668
 GameObject:
   m_ObjectHideFlags: 1
@@ -1268,13 +1268,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114388362126166066}
   m_TextComponent: {fileID: 114625290935503356}
   m_Placeholder: {fileID: 114006231018655280}
-  m_ContentType: 0
+  m_ContentType: 4
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 3
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -1606,7 +1606,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114977085229341770}
-        m_MethodName: ToggleActivated
+        m_MethodName: RememberUsernameToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
