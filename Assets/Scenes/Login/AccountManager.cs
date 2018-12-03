@@ -97,16 +97,19 @@ namespace AccountData
 
                     DataInfo = JsonConvert.DeserializeObject<SaveGameDataInfo>(json);
                     accountHolder = DataInfo.Accounts;
+                    LoadFileName = DataInfo.saveFileName;
 
                     if (registerUsername.text == "" || registerPassword.text == "" || SaveFileName.text == "")
                     {
                         RespondText.text = "<color=red>Username, password or save file name has not been filled in.</color>";
                         StartCoroutine(RemoveText(3));
+                        return;
                     }
-                    else if (accountHolder.ContainsKey(registerUsername.text) && accountHolder.ContainsValue(registerPassword.text))
+                    else if (accountHolder.ContainsKey(registerUsername.text) || LoadFileName == DataInfo.saveFileName)
                     {
                         RespondText.text = "<color=red> account already exists.</color>";
                         StartCoroutine(RemoveText(3));
+                        return;
                     }
                     else
                     {
@@ -114,6 +117,7 @@ namespace AccountData
                         RespondText.text = "<color=blue>Account has been registered.</color>";
                         Data.SaveData();
                         StartCoroutine(RemoveText(3));
+                        return;
                     }
                 }
                 ResetValues();
@@ -164,6 +168,7 @@ namespace AccountData
                     {
                         RespondText.text = "<color=red>You got to put something in the inputfield, otherwise it wont work.</color>";
                         StartCoroutine(RemoveText(3));
+                        return;
                     }
                     else if(!accountHolder.ContainsKey(loginUsername.text) && !accountHolder.ContainsValue(loginPassword.text))
                     {
