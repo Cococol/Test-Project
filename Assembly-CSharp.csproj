@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scenes\Console\ConsoleCommandScript.cs" />
     <Compile Include="Assets\Scenes\Login\AccountManager.cs" />
     <Compile Include="Assets\Scenes\PlayScene\PlayerController.cs" />
+    <Compile Include="Assets\Scenes\PlayScene\QuitGame.cs" />
     <Compile Include="Assets\Scripts\Clock\RealTimeClock.cs" />
     <Compile Include="Assets\Scripts\Data\SaveGameData.cs" />
     <Compile Include="Assets\SerializableDictionary\SerializableDictionary.cs" />

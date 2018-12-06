@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
 using SaveData;
+using UnityEngine.SceneManagement;
 
 namespace AccountData
 {
@@ -45,7 +46,7 @@ namespace AccountData
         public Dictionary<string, string> accountHolder = new Dictionary<string, string>();
 
         //the class where i can call functions to save info in the json files.
-        public SaveGameData Data;
+        SaveGameData Data;
 
         //The class where i can call the variables that have been saved.
         SaveGameDataInfo DataInfo = new SaveGameDataInfo();
@@ -57,9 +58,9 @@ namespace AccountData
             SearchNewSaveFiles();
             Data.SetAccMan();
             //checks if the streaming assets folder exists, if it exists it will check if a specific file exists.
-            if (Directory.Exists(Application.dataPath + "/StreamingAssets/"))
+            if (Directory.Exists(Application.dataPath + "/StreamingAssets/SaveUsername"))
             {
-                if (File.Exists(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json"))
+                if (File.Exists(Application.dataPath + "/StreamingAssets/SaveUsername/SaveUsernameInfo.json"))
                 {
                     Data.LoadUsername();
                 }
@@ -71,7 +72,7 @@ namespace AccountData
             //if it doesn't exist, we will make a streaming assets path.
             else
             {
-                Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/");
+                Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/SaveUsername");
             }
 
         }
@@ -211,6 +212,7 @@ namespace AccountData
                             StartCoroutine(RemoveText(3));
                             Data.SaveUsername();
                             ResetValues();
+                            SceneManager.LoadScene("Level 1");
                             return;
                         }
                         //if the information doesn't exist in the files it will give an error message that the password or username is incorrect.

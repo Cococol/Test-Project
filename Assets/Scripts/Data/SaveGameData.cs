@@ -40,13 +40,13 @@ namespace SaveData
             //takes the data from the SaveGameDataInfo class, sets it over to a string and formats it so it can be stored in a json file.
             json = JsonConvert.SerializeObject(UsernameData, Formatting.Indented);
             //Writes all the data that is stored in the json string to a .json file and stores it into a file named "SaveUsernameInfo" into the StreamingAssets folder.
-            File.WriteAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json", json);
+            File.WriteAllText(Application.dataPath + "/StreamingAssets/SaveUsername/SaveUsernameInfo.json", json);
         }
 
         public void LoadUsername()
         {
             //puts all the data saved in the "SavedUsernameInfo" file into the json string.
-            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/SaveUsernameInfo.json");
+            json = File.ReadAllText(Application.dataPath + "/StreamingAssets/SaveUsername/SaveUsernameInfo.json");
             //reads out the information stored into the json string and puts it into variables.
             UsernameData = JsonConvert.DeserializeObject<SaveUsername>(json);
             //sets the data from the json string equal to the variables.

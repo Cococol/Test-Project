@@ -38,11 +38,11 @@ namespace consoleCommand
 
         private void Start()
         {
-            //expSlider.value = expSliderCalculator();
+            expSlider.value = expSliderCalculator();
             rb = GetComponent<Rigidbody>();
             Exp = RemainingExp;
             m_camera = Camera.main;
-            Cursor.visible = false;
+            //Cursor.visible = false;
         }
 
         void Update()
