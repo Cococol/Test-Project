@@ -11,7 +11,7 @@ namespace consoleCommand
         //inputfield where you can use commands
         public InputField inputFieldText;
         //text field which saves the commands you've used
-        public Text consoleText;
+        public Text consoleText { get; set; }
         //gameobject to active the console
         public GameObject console;
         #endregion
